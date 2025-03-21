@@ -1,6 +1,13 @@
+require 'fastlane/action'
+require 'fastlane_core/globals'
+require 'fastlane_core/configuration/config_item'
+
 module Fastlane
+  UI = FastlaneCore::UI unless Fastlane.const_defined?(:UI)
+
   module Actions
     class UploadGithubReleaseAssetAction < Action
+      # rubocop:disable Metrics/PerceivedComplexity
       def self.run(params)
         require 'json'
         require 'uri'
@@ -52,6 +59,7 @@ module Fastlane
           UI.user_error!("Upload failed! Response: #{res.body}")
         end
       end
+      # rubocop:enable Metrics/PerceivedComplexity
 
       def self.description
         "Uploads an asset to a GitHub release"
@@ -84,8 +92,8 @@ module Fastlane
                                        description: "GitHub access token (needs the necessary write permission). Hint: Could be of form \"ghp_...\"",
                                        optional: false,
                                        verify_block: proc do |value|
-                                        UI.user_error!("GitHub access token cannot be empty") if value.to_s.empty?
-                                      end)
+                                                       UI.user_error!("GitHub access token cannot be empty") if value.to_s.empty?
+                                                     end)
         ]
       end
 

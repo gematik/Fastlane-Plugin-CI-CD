@@ -5,20 +5,23 @@ require 'fastlane/plugin/ci_cd/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-ci_cd'
   spec.version       = Fastlane::CiCd::VERSION
-  spec.author        = 'Gerald Bartz'
+  spec.authors       = ['Gerald Bartz', 'Martin Fiebig']
   spec.email         = 'gerald.bartz@gematik.de'
 
   spec.summary       = 'A collection of actions that caters to our CI/CD needs'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-ci_cd"
+  spec.homepage      = "https://github.com/gematik/fastlane-plugin-ci_cd"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
   spec.require_paths = ['lib']
   spec.metadata['rubygems_mfa_required'] = 'true'
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 3.1.2'
 
   # Don't add a dependency to fastlane or fastlane_re
   # since this would cause a circular dependency
 
-  # spec.add_dependency 'your-dependency', '~> 1.0.0'
+  # HTML/XML parser with CSS selector support
+  spec.add_dependency('nokogiri')
+  # Fast Markdown parser
+  spec.add_dependency('kramdown')
 end
