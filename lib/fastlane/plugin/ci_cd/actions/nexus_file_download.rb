@@ -1,50 +1,53 @@
+require 'fastlane/action'
+require 'fastlane_core/configuration/config_item'
+
 module Fastlane
+  UI = FastlaneCore::UI unless Fastlane.const_defined?(:UI)
+
   module Actions
     class NexusFileDownloadAction < Action
       def self.run(params)
         require 'uri'
         require 'net/http'
-        
+
         artefact_path = params[:artefact_path]
         target_file_path = params[:target_file_path]
         repository = params[:repository]
         nexus_username = params[:nexus_username]
         nexus_password = params[:nexus_password]
         nexus_url = params[:nexus_url]
-        
+
         uri = URI("#{nexus_url}repository/#{repository}/#{artefact_path}")
-        
+
         # Get directory from file path
         target_directory = File.dirname(target_file_path)
         FileUtils.mkdir_p(target_directory) unless File.directory?(target_directory)
-        
+
         UI.message("Downloading artefact from #{uri} to #{target_file_path}")
         Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https', verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
           request = Net::HTTP::Get.new(uri)
           request.basic_auth(nexus_username, nexus_password)
-          
+
           response = http.request(request)
-          
+
           case response
           when Net::HTTPSuccess
-            File.open(target_file_path, 'w+') do |file|
-              file.write(response.body)
-            end
+            File.write(target_file_path, response.body)
             UI.success("Successfully downloaded artefact to #{target_file_path}")
           else
             UI.user_error!("Nexus Download failed with #{response.code}")
           end
         end
       end
-      
+
       def self.description
         "Downloads an artefact from Nexus repository"
       end
-      
+
       def self.authors
         ["Gerald Bartz"]
       end
-      
+
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :artefact_path,
@@ -86,7 +89,7 @@ module Fastlane
                                        end)
         ]
       end
-      
+
       def self.is_supported?(platform)
         true
       end
