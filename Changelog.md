@@ -2,6 +2,10 @@
 
 ## Next Version
 
+## 0.3.0
+
+  - Added MS Teams related actions for notifying team channels/chats
+
 ## 0.2.0
 
 ### Features
