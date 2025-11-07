@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A collection of actions that caters to our CI/CD needs'
   spec.homepage      = "https://github.com/gematik/fastlane-plugin-ci_cd"
-  spec.license       = "MIT"
+  spec.license       = "Apache-2.0"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
   spec.require_paths = ['lib']
