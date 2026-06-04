@@ -1,5 +1,9 @@
 # Next Version
 
+# 0.5.0
+  
+  - Added E-Rezept App download from shared repository action
+
 # 0.4.0
 
   - Added E-Rezept App data pull related actions
